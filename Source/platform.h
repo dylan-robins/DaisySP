@@ -17,7 +17,7 @@ This file defines miscellaneous macros for debugging, assertions, etc.
 #else
 // Otherwise, raise a default assertion failure
 #include <assert.h>
-#define D_SP_ASSERTFALSE(expr) __assert_fail(#expr, __FILE__, __LINE__, __ASSERT_FUNCTION)
+#define D_SP_ASSERTFALSE(expr) assert(expr)
 #endif
 
 // If expression is false, trigger an assertion failure using the appropriate
