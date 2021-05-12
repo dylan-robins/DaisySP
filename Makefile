@@ -162,7 +162,7 @@ BIN = $(CP) -O binary -S
 
 # language standards
 C_STD = -std=gnu11
-CPP_STD = -std=gnu++14
+CPP_STD = -std=gnu++20
 
 # cpu
 CPU = -mcpu=cortex-m7
