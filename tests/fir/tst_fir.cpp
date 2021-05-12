@@ -56,10 +56,10 @@ static uint32_t apply(dut_type& DUT,
                       size_t signal_length,
                       size_t block_size)
 {
-    assert(nullptr != pFilter);
-    assert(nullptr != pSrc);
-    assert(nullptr != pDst);
-    assert(filter_length > 0);
+    D_SP_ASSERT(nullptr != pFilter);
+    D_SP_ASSERT(nullptr != pSrc);
+    D_SP_ASSERT(nullptr != pDst);
+    D_SP_ASSERT(filter_length > 0);
 
     /* configure impulse response */
     const bool init_res = DUT.SetIR(pFilter, filter_length, false);
@@ -124,10 +124,10 @@ verify_firfilter_single(float* filter, size_t signal_length, size_t block_size)
     /* Compile-time configured object */
     static FIRFilterImplGeneric<filter_length, MAX_BLOCK_SZ> REF;
 
-    assert(block_size <= MAX_BLOCK_SZ);
-    assert(signal_length <= DSY_COUNTOF(data_out));
-    assert(signal_length <= DSY_COUNTOF(data_ref));
-    assert(signal_length <= DSY_COUNTOF(data_in));
+    D_SP_ASSERT(block_size <= MAX_BLOCK_SZ);
+    D_SP_ASSERT(signal_length <= DSY_COUNTOF(data_out));
+    D_SP_ASSERT(signal_length <= DSY_COUNTOF(data_ref));
+    D_SP_ASSERT(signal_length <= DSY_COUNTOF(data_in));
 
     /* regenerate input signal every time for some random variation */
     hw.GenerateSignal(data_in, signal_length);

@@ -15,6 +15,9 @@
 #ifndef DSYSP_H
 #define DSYSP_H
 
+/** Platform-dependant macros & utilities */
+#include "platform.h"
+
 /** Control Modules */
 #include "Control/adenv.h"
 #include "Control/adsr.h"

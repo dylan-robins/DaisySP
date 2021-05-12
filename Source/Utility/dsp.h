@@ -7,6 +7,7 @@
 #include <cstdint>
 #include <random>
 #include <cmath>
+#include "platform.h"
 
 /** PIs
 */
@@ -206,8 +207,8 @@ inline void TestFloat(float &x, float y = 0.f)
 {
     if(!std::isnormal(x) && x != 0)
     {
-#ifdef __arm__ && DEBUG
-        asm("bkpt 255");
+#ifdef DEBUG
+        D_SP_ASSERTFALSE;
 #else
         x = y;
 #endif
@@ -277,7 +278,7 @@ constexpr uint32_t get_next_power2(uint32_t x)
     x |= x >> 16;
     x++;
 
-    assert(is_power2(x));
+    D_SP_ASSERT(is_power2(x));
     return x;
 }
 

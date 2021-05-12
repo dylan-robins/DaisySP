@@ -124,7 +124,7 @@ class DsyTestHelper
 
     static void GenerateSignal(float* buf, size_t length)
     {
-        assert(nullptr != buf);
+        D_SP_ASSERT(nullptr != buf);
 
         if(nullptr != buf)
         {

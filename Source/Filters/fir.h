@@ -6,6 +6,7 @@
 #include <cstring> // for memset
 #include <cassert>
 #include <utility>
+#include "platform.h"
 
 #ifdef USE_ARM_DSP
 #include <arm_math.h> // required for platform-optimized version
@@ -99,8 +100,8 @@ struct FIRMemory<FIRFILTER_USER_MEMORY>
     /* Reset the internal filter state (but not the coefficients) */
     void Reset()
     {
-        assert(nullptr != state_);
-        assert(0 != state_size_);
+        D_SP_ASSERT(nullptr != state_);
+        D_SP_ASSERT(0 != state_size_);
         if(nullptr != state_)
         {
             memset(state_, 0, state_size_ * sizeof(state_[0]));
@@ -125,8 +126,8 @@ struct FIRMemory<FIRFILTER_USER_MEMORY>
     bool SetCoefs(const float coefs[], size_t size, bool reverse)
     {
         /* reversing of external IR is not supported*/
-        assert(false == reverse);
-        assert(nullptr != coefs || 0 == size);
+        D_SP_ASSERT(false == reverse);
+        D_SP_ASSERT(nullptr != coefs || 0 == size);
 
         if(false == reverse && (nullptr != coefs || 0 == size))
         {
@@ -174,7 +175,7 @@ class FIRFilterImplGeneric : public FIRMemory<max_size, max_block>
     /* Process one sample at a time */
     float Process(float in)
     {
-        assert(size_ > 0u);
+        D_SP_ASSERT(size_ > 0u);
         /* Feed data into the buffer */
         state_[size_ - 1u] = in;
 
@@ -197,10 +198,10 @@ class FIRFilterImplGeneric : public FIRMemory<max_size, max_block>
     void ProcessBlock(const float* pSrc, float* pDst, size_t block)
     {
         /* be sure to run debug version from time to time */
-        assert(block <= FIRMem::MaxBlock());
-        assert(size_ > 0u);
-        assert(nullptr != pSrc);
-        assert(nullptr != pDst);
+        D_SP_ASSERT(block <= FIRMem::MaxBlock());
+        D_SP_ASSERT(size_ > 0u);
+        D_SP_ASSERT(nullptr != pSrc);
+        D_SP_ASSERT(nullptr != pDst);
 
         /* Process the block of data */
         for(size_t j = 0; j < block; j++)
@@ -291,7 +292,7 @@ class FIRFilterImplARM : public FIRMemory<max_size, max_block>
     /* Process a block of data */
     void ProcessBlock(float* pSrc, float* pDst, size_t block)
     {
-        assert(block <= FIRMem::MaxBlock());
+        D_SP_ASSERT(block <= FIRMem::MaxBlock());
         arm_fir_f32(&fir_, pSrc, pDst, block);
     }
 
